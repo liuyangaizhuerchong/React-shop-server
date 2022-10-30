@@ -1,13 +1,18 @@
 import React from "react";
-import { Button } from "antd";
-import './App.less';
+import { Routes, Route, Navigate } from "react-router-dom";
+import "./App.less";
+import Login from "./pages/Login";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
-    <div>
-      App...
-      <Button type="primary">按钮</Button>
-    </div>
+    <>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/" element={<Navigate to="/login" />} />
+      </Routes>
+    </>
   );
 }
 
