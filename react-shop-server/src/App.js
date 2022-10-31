@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.less";
-import Login from "./pages/Login";
-import Admin from "./pages/Admin";
+import Login from "./containers/Login";
+import Admin from "./containers/Admin";
 
 function App() {
   return (

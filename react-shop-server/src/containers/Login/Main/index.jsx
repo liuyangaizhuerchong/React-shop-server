@@ -1,21 +1,23 @@
 import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { userName } from "../rules";
+import { testAction, test1Action } from "../../redux/actions/test_action";
+import { userName, password } from "../rules";
+
 const { Item } = Form;
-export default function Main() {
+function Main() {
+  const test1 = useSelector((state) => state.test);
+  const dispatch = useDispatch();
+  console.log(test1);
   const onFinish = (values) => {
+    console.log(
+      dispatch(testAction(values.username)),
+      dispatch(test1Action(values.password))
+    );
     console.log("Received values of form: ", values);
   };
-  /* const validator = (rule, value, callback) => {
-    console.log(rule, value, callback);
-    try {
-      throw new Error("Something wrong!");
-    } catch (err) {
-      callback(err);
-    }
-  }; */
   return (
     <section>
       <h1>用户登录</h1>
@@ -33,17 +35,7 @@ export default function Main() {
             placeholder="请输入您的用户名"
           />
         </Item>
-        <Item
-          name="password"
-          rules={[
-            {
-              validator: (_, value) =>
-                value
-                  ? Promise.resolve()
-                  : Promise.reject(new Error("Should accept agreement")),
-            },
-          ]}
-        >
+        <Item name="password" rules={password}>
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
@@ -72,3 +64,9 @@ export default function Main() {
     </section>
   );
 }
+
+/* export default connect((state) => ({ test1: state.test }), {
+  testAction,
+  test1Action,
+})(Main); */
+export default connect()(Main);
