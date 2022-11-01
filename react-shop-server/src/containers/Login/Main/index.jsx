@@ -1,22 +1,26 @@
 import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input } from "antd";
-import { connect, useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { testAction, test1Action } from "../../redux/actions/test_action";
-import { userName, password } from "../rules";
+import { Button, Checkbox, Form, Input, message } from "antd";
+import { connect, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { user_name, pass_word } from "../rules";
+import { login_Api } from "../../../api/login";
+import { userAction } from "../../redux/actions/userAction";
 
 const { Item } = Form;
 function Main() {
-  const test1 = useSelector((state) => state.test);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log(test1);
-  const onFinish = (values) => {
-    console.log(
-      dispatch(testAction(values.username)),
-      dispatch(test1Action(values.password))
-    );
-    console.log("Received values of form: ", values);
+  const onFinish = async (values) => {
+    const res = await login_Api(values);
+    // console.log(res);
+    if (res.code === 1) {
+      message.success("登录成功");
+      dispatch(userAction({ user: values, token: res.data }));
+      navigate("/admin", { replace: true });
+    } else {
+      message.warn(res.data);
+    }
   };
   return (
     <section>
@@ -29,13 +33,13 @@ function Main() {
         }}
         onFinish={onFinish}
       >
-        <Item name="username" rules={userName}>
+        <Item name="userName" rules={user_name}>
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="请输入您的用户名"
           />
         </Item>
-        <Item name="password" rules={password}>
+        <Item name="password" rules={pass_word}>
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"

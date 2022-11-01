@@ -1,4 +1,4 @@
-const userName = [
+const user_name = [
   {
     required: true,
     message: "请输入您的用户名",
@@ -16,7 +16,7 @@ const userName = [
     message: "输入字符不能超过12位",
   },
 ];
-const password = [
+const pass_word = [
   {
     required: true,
     message: "请输入您的密码",
@@ -40,4 +40,4 @@ const password = [
   }),
 ];
 
-export { password, userName };
+export { pass_word, user_name };

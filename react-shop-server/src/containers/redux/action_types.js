@@ -1,2 +1,1 @@
-export const ADD_STR = "add_str";
-export const ADD_NUM = "add_num";
+export const SAVE_USER_INFO = "save_user_info";

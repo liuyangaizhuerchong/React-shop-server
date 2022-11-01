@@ -1,5 +1,10 @@
 import React from "react";
+import { connect, useSelector } from "react-redux";
 
-export default function Admin() {
+function Admin() {
+  const user = useSelector((state) => state.saveUserInfo);
+
+  console.log(user);
   return <div>Admin</div>;
 }
+export default connect()(Admin);
