@@ -2,7 +2,7 @@ import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { user_name, pass_word } from "../rules";
 import { login_Api } from "../../../api/login";
 import { userAction } from "../../../redux/actions/userAction";
@@ -11,7 +11,7 @@ const { Item } = Form;
 function Main() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userState = useSelector((state) => ({ userState: state.saveUserInfo }));
+  const { isLogin } = useSelector((state) => state.saveUserInfo);
   const onFinish = async (values) => {
     const res = await login_Api(values);
     if (res.code === 1) {
@@ -24,8 +24,8 @@ function Main() {
   };
   return (
     <>
-      {userState.isLogin ? (
-        navigate("/admin", { replace: true })
+      {isLogin === true ? (
+        <Navigate to="/admin" replace={true} />
       ) : (
         <section>
           <h1>用户登录</h1>
