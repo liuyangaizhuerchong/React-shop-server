@@ -1,7 +1,7 @@
 import axios from "axios";
 import NProgress from "nprogress";
 import { serversUrl } from "./tools";
-// import { message } from "antd";
+import { message } from "antd";
 import qs from "qs";
 import "nprogress/nprogress.css";
 
@@ -33,7 +33,8 @@ instance.interceptors.response.use(
   },
   (error) => {
     NProgress.done();
-    return Promise.reject("失败了", error);
+    message.error(error.message);
+    return Promise.reject(error);
   }
 );
 /**
