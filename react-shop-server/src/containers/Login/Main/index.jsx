@@ -15,11 +15,11 @@ function Main() {
   const onFinish = async (values) => {
     const res = await login_Api(values);
     if (res.code === 1) {
-      message.success("登录成功");
+      message.success("登录成功", 1);
       dispatch(userAction({ user: values, token: res.data }));
       navigate("/admin", { replace: true });
     } else {
-      message.warn(res.data);
+      message.warn("用户名 或" + res.data, 1);
     }
   };
   return (

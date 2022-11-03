@@ -4,6 +4,8 @@ import { serversUrl } from "./tools";
 import { message } from "antd";
 import store from "../redux";
 import qs from "qs";
+import { useDispatch } from "react-redux";
+import { userLogout } from "../redux/actions/userAction";
 import "nprogress/nprogress.css";
 
 const instance = axios.create({
@@ -35,7 +37,11 @@ instance.interceptors.response.use(
     return response.data;
   },
   (error) => {
+    const dispatch = useDispatch();
     NProgress.done();
+    if (error.response.status === 401) {
+      dispatch(userLogout());
+    }
     message.error(error.message);
     return Promise.reject(error);
   }

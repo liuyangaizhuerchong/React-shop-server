@@ -3,14 +3,59 @@
   .sider {
     color: white;
   }
-  .header {
-    color: white;
+  .admin_header {
+    height: 80px;
+    padding: 0;
+    margin-right: 10px;
+    background-color: white;
+    line-height: 40px;
+    .header_top {
+      height: 40px;
+      text-align: right;
+      border-bottom: 1px solid "#FFA500";
+      .username {
+        margin-left: 10px;
+      }
+    }
+    .header_bottom {
+      display: flex;
+      height: 40px;
+      .top_left {
+        position: relative;
+        width: 30%;
+        font-size: 20px;
+        text-align: center;
+        &::after {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          top: 40px;
+          content: "";
+          border-top: 15px solid white;
+          border-right: 15px solid transparent;
+          border-left: 15px solid transparent;
+          border-bottom: 15px solid transparent;
+        }
+      }
+      .top_right {
+        width: 70%;
+        text-align: right;
+        img {
+          width: 25px;
+          margin: 0 10px;
+        }
+        .admin_weather {
+          margin: 0 10px;
+        }
+      }
+    }
   }
-  .content {
+
+  .admin_content {
     margin: 20px 20px 0 20px;
     background-color: white;
   }
-  .footer {
+  .admin_footer {
     text-align: center;
   }
 }
