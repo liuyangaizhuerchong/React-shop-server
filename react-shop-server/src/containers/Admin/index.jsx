@@ -1,26 +1,37 @@
 import React from "react";
-import { connect, useSelector, useDispatch } from "react-redux";
-import { useNavigate, Navigate } from "react-router-dom";
-import { removeToken } from "../../config/tools";
-import { userLogout } from "../../redux/actions/userAction";
+import { connect, useSelector /* useDispatch */ } from "react-redux";
+import {
+  /* useNavigate */
+  Navigate,
+  useRoutes /* Routes, Route  */,
+} from "react-router-dom";
+import { Layout } from "antd";
+import { all_routes } from "../../routers";
+import "./index.less";
+const { Header, Footer, Sider, Content } = Layout;
 function Admin() {
-  const { user, isLogin } = useSelector((state) => state.saveUserInfo);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const logOut = () => {
+  const { isLogin } = useSelector((state) => state.saveUserInfo);
+  /* const dispatch = useDispatch();
+  const navigate = useNavigate(); */
+  const element = useRoutes(all_routes);
+  /* const logOut = () => {
     removeToken("token");
     dispatch(userLogout());
     navigate("/login", { replace: true });
-  };
-  console.log(user, isLogin);
+  }; */
   return (
     <>
       {isLogin === true ? (
-        <div>
-          Admin
-          <button onClick={logOut}>退出登录</button>
-          <button>获取商品列表</button>
-        </div>
+        <Layout className="admin">
+          <Sider className="sider">Sider</Sider>
+          <Layout>
+            <Header className="header">Header</Header>
+            <Content className="content">{element}</Content>
+            <Footer className="footer">
+              请使用谷歌浏览器，以便有更佳的体验。
+            </Footer>
+          </Layout>
+        </Layout>
       ) : (
         <Navigate to="/login" replace={true} />
       )}

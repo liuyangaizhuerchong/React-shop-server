@@ -27,7 +27,7 @@ function Main() {
       {isLogin === true ? (
         <Navigate to="/admin" replace={true} />
       ) : (
-        <section>
+        <section className="login_main">
           <h1>用户登录</h1>
           <Form
             name="normal_login"
