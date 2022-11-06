@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../imgs/logo.png";
+import logo from "../../../common/logo.png";
 export default function Header() {
   return (
     <div className="login_header">
