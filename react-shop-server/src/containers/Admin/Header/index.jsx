@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 import screenfull from "screenfull";
 import dayjs from "dayjs";
 import { userLogout } from "../../../redux/actions/userAction";
+import { menuConfig } from "../../../config/menuConfig";
 const { confirm } = Modal;
 const { Header } = Layout;
 export default function AdminHeader() {
@@ -31,9 +32,20 @@ export default function AdminHeader() {
       });
     }
   }, [isFull]);
+
   useEffect(() => {
-    setBread(location.pathname);
-  }, [location]);
+    let pathKey = location.pathname.split("/").reverse()[0];
+    let title = "";
+    menuConfig.forEach((item) => {
+      if (item.children instanceof Array) {
+        const tmp = item.children.find((c_item) => c_item.key === pathKey);
+        if (tmp) title = tmp.title;
+      } else {
+        if (item.key === pathKey) title = item.title;
+      }
+    });
+    setBread(title);
+  }, [location.pathname]);
   const fullScreen = () => {
     if (screenfull.isEnabled) {
       screenfull.toggle();
