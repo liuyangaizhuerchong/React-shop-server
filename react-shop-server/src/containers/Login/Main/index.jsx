@@ -25,7 +25,7 @@ function Main() {
   return (
     <>
       {isLogin === true ? (
-        <Navigate to="/admin" replace={true} />
+        <Navigate to="/admin/home" replace={true} />
       ) : (
         <section className="login_main">
           <h1>用户登录</h1>

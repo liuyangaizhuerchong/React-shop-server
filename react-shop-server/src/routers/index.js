@@ -5,36 +5,34 @@ import Line from "../containers/Line";
 import Pie from "../containers/Pie";
 import Role from "../containers/Role";
 import User from "../containers/user";
-/* import Products from "../containers/Products";
-import Charts from "../containers/Charts"; */
 
 export const all_routes = [
   {
     path: "home",
     element: <Home />,
   },
-  /* {
+  {
     path: "/prod_about",
-    element: <Products />,
+    // element: <Products />,
     Children: [
       {
-        path: "category",
+        path: "prod_about/category",
         element: <Category />,
       },
       {
-        path: "product",
+        path: "prod_about/product",
         element: <Product />,
       },
     ],
-  }, */
-  {
-    path: "category",
+  },
+  /* {
+    path: "prod_about/category",
     element: <Category />,
   },
   {
-    path: "product",
+    path: "prod_about/product",
     element: <Product />,
-  },
+  }, */
   {
     path: "user",
     element: <User />,
@@ -43,26 +41,26 @@ export const all_routes = [
     path: "role",
     element: <Role />,
   },
-  /* {
+  {
     path: "charts",
-    element: <Charts />,
+    // element: <Charts />,
     children: [
       {
-        path: "line",
+        path: "charts/line",
         element: <Line />,
       },
       {
-        path: "pie",
+        path: "charts/pie",
         element: <Pie />,
       },
     ],
-  }, */
-  {
-    path: "line",
+  },
+  /* {
+    path: "charts/line",
     element: <Line />,
   },
   {
-    path: "pie",
+    path: "charts/pie",
     element: <Pie />,
-  },
+  }, */
 ];
