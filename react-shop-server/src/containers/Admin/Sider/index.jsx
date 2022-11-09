@@ -16,12 +16,7 @@ function getItem(label, key, icon, children, type) {
 const getMenuItem = (target) => {
   let arr = target.map((item) => {
     return item.children instanceof Array
-      ? getItem(
-          <Link to={item.path}>{item.title}</Link>,
-          item.key,
-          item.icon,
-          getMenuItem(item.children)
-        )
+      ? getItem(item.title, item.key, item.icon, getMenuItem(item.children))
       : getItem(<Link to={item.path}>{item.title}</Link>, item.key, item.icon);
   });
   return arr;
@@ -31,7 +26,6 @@ export default function AdminSider() {
   const pathKey = useLocation();
   const defaultSelectItem = pathKey.pathname.split("/").reverse()[0];
   const defaultOpenItem = pathKey.pathname.split("/").splice(2);
-  console.log(defaultOpenItem);
   return (
     <Sider className="sider">
       <div className="sider_logo">
