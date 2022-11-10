@@ -58,6 +58,7 @@ export default function AdminHeader() {
       content: "确认退出吗？",
       cancelText: "取消",
       okText: "确定",
+      centered: true,
       onOk: () => {
         dispatch(userLogout());
       },

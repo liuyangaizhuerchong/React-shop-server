@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Table, Form, Modal, Input, message, Space } from "antd";
+import {
+  Card,
+  Button,
+  Table,
+  Form,
+  Modal,
+  Input,
+  message,
+  Space,
+  Spin,
+} from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import {
   categoryListApi,
   addCategoryApi,
@@ -8,18 +19,26 @@ import {
 } from "../../api/products";
 import { dalImg } from "../../config/tools";
 import "./index.less";
+const { confirm } = Modal;
 export default function Category() {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [typeOpen, setTypeOpen] = useState("");
   const [id, setId] = useState(0);
   const [form] = Form.useForm();
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     categoryList();
   }, []);
   const categoryList = async () => {
     const result = await categoryListApi();
-    setData(result.data);
+    const { data, code } = result;
+    if (code === 1) {
+      setData(data);
+      setIsLoading(false);
+    } else {
+      message.error("获取数据失败", 1);
+    }
   };
   const addCategory = () => {
     setTypeOpen("ADD");
@@ -31,11 +50,23 @@ export default function Category() {
     setTypeOpen("MODIFY");
     setOpen(true);
   };
-  const delCategory = async (id) => {
-    await deleteCategoryApi(id);
-    categoryList();
-    message.success("删除成功", 1);
+  const delCategory = (id) => {
+    confirm({
+      title: "警告",
+      icon: <ExclamationCircleOutlined />,
+      content: "是否删除该项？",
+      okText: "确定",
+      okType: "danger",
+      cancelText: "取消",
+      centered: true,
+      onOk: async () => {
+        await deleteCategoryApi(id);
+        categoryList();
+        message.success("删除成功", 1);
+      },
+    });
   };
+
   const onOk = () => {
     form
       .validateFields()
@@ -107,24 +138,25 @@ export default function Category() {
   ];
   return (
     <>
-      <Card
-        className="category_card"
-        extra={
-          <Button type="primary" onClick={addCategory}>
-            新增
-          </Button>
-        }
-      >
-        <Table
-          className="category_table"
-          dataSource={data}
-          columns={columns}
-          bordered={true}
-          rowKey="id"
-          pagination={{ pageSize: 5, showQuickJumper: true }}
-        />
-        ;
-      </Card>
+      <Spin tip="Loading..." spinning={isLoading}>
+        <Card
+          className="category_card"
+          extra={
+            <Button type="primary" onClick={addCategory}>
+              新增
+            </Button>
+          }
+        >
+          <Table
+            className="category_table"
+            dataSource={data}
+            columns={columns}
+            bordered={true}
+            rowKey="id"
+            pagination={{ pageSize: 5, showQuickJumper: true }}
+          />
+        </Card>
+      </Spin>
       <Modal
         getContainer={false}
         open={open}
