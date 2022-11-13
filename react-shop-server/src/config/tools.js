@@ -17,3 +17,5 @@ export const dalImg = (url) => {
   }
   return "https://game.gtimg.cn/images/zb/x5/uploadImg/goods/201712/20171205200207_77656.big.jpg";
 };
+
+export const PER_SIZE = 5;

@@ -1,4 +1,4 @@
-import Product from "../containers/Product";
+import Products from "../containers/Products";
 import Category from "../containers/Category";
 import Home from "../containers/Home";
 import Line from "../containers/Line";
@@ -17,8 +17,8 @@ export const all_routes = [
     element: <Category />,
   },
   {
-    path: "prod_about/product",
-    element: <Product />,
+    path: "prod_about/products",
+    element: <Products />,
   },
 
   {

@@ -30,8 +30,8 @@ export const menuConfig = [
       },
       {
         title: "商品管理",
-        path: "prod_about/product",
-        key: "product",
+        path: "prod_about/products",
+        key: "products",
         icon: <UnorderedListOutlined />,
       },
     ],
