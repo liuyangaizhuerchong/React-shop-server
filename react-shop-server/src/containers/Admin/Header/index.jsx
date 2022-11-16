@@ -34,7 +34,10 @@ export default function AdminHeader() {
   }, [isFull]);
 
   useEffect(() => {
-    let pathKey = location.pathname.split("/").reverse()[0];
+    const {pathname} = location
+    // console.log(pathname.split("/").indexOf("products") !== -1 ? 'products':pathname.split("/").reverse()[0]);
+    // let pathKey = pathname.split("/").reverse()[0];
+    let pathKey = pathname.split("/").indexOf("products") !== -1 ? 'products':pathname.split("/").reverse()[0]
     let title = "";
     menuConfig.forEach((item) => {
       if (item.children instanceof Array) {
@@ -45,7 +48,7 @@ export default function AdminHeader() {
       }
     });
     setBread(title);
-  }, [location.pathname]);
+  }, [location]);
   const fullScreen = () => {
     if (screenfull.isEnabled) {
       screenfull.toggle();

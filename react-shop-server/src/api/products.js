@@ -20,3 +20,5 @@ export const putProductApi = (id, data) =>
   put("/api/v1/admin/product/" + id, data);
 // 删除商品
 export const delProductApi = (id) => del("/api/v1/admin/product/" + id);
+// 单个商品
+export const detailProductApi = (id) => get("/api/v1/admin/product/" + id);

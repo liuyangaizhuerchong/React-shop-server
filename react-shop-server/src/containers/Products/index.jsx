@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   Card,
   Button,
@@ -13,23 +15,29 @@ import { SearchOutlined } from "@ant-design/icons";
 import { productsListApi } from "../../api/products";
 import { dalImg } from "../../config/tools";
 import { PER_SIZE } from "../../config/tools";
+import { productsAction } from "../../redux/actions/productsAction";
 import "./index.less";
+
 export default function Products() {
   const [data, setData] = useState([]);
   const [total, setTotal] = useState(1);
   const [selectName, setSelectName] = useState("name");
   const [input_Value, setInputValue] = useState("");
   const [isSearch, setIsSearch] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const productsList = async (number = 1) => {
     let res = [];
-    isSearch
-      ? (res = await productsListApi({
-          per: PER_SIZE,
-          page: number,
-          [selectName]: input_Value,
-        }))
-      : (res = await productsListApi({ per: PER_SIZE, page: number }));
-
+    if (isSearch) {
+      res = await productsListApi({
+        per: PER_SIZE,
+        page: number,
+        [selectName]: input_Value,
+      });
+    } else {
+      res = await productsListApi({ per: PER_SIZE, page: number });
+      dispatch(productsAction(res));
+    }
     if (res.code === 1) {
       setData(res.data);
       setTotal(res.total);
@@ -60,7 +68,6 @@ export default function Products() {
       ellipsis: {
         showTitle: false,
       },
-      // return text.length > 25 ? text.substring(0, 25) + "..." : text;
       render: (text) => (
         <Tooltip placement="topLeft" title={text}>
           {text}
@@ -114,8 +121,16 @@ export default function Products() {
       render: (text, record, index) => {
         return (
           <Space>
-            <Button type="link">详情</Button>
-            <Button type="link">修改</Button>
+            {/*  "detail", { state: { id: text.id } } */}
+            <Button type="link" onClick={() => navigate(`detail/${text.id}`)}>
+              详情
+            </Button>
+            <Button
+              type="link"
+              onClick={() => navigate(`update_product/${text.id}`)}
+            >
+              修改
+            </Button>
             <Button type="link">删除</Button>
           </Space>
         );
@@ -154,7 +169,11 @@ export default function Products() {
             </Button>
           </>
         }
-        extra={<Button type="primary">新增</Button>}
+        extra={
+          <Button type="primary" onClick={() => navigate("add_product")}>
+            新增
+          </Button>
+        }
       >
         <Table
           dataSource={data}
