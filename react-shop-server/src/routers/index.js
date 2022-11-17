@@ -5,8 +5,8 @@ import Line from "../containers/Line";
 import Pie from "../containers/Pie";
 import Role from "../containers/Role";
 import User from "../containers/user";
-import AddProduct from "../containers/Products/AddProduct";
 import Detail from "../containers/Products/Detail";
+import AddProduct from "../containers/Products/AddProduct";
 
 export const all_routes = [
   {
@@ -18,19 +18,22 @@ export const all_routes = [
     path: "prod_about/category",
     element: <Category />,
   },
-  {
-    path: "prod_about/product/add_product",
-    element: <AddProduct />,
-  },
 
   {
-    path: "prod_about/product",
+    path: "prod_about/products",
     element: <Products />,
-    children: [
-      // { path: "add_product", element: <AddProduct /> },
-      { path: "update_product", element: <AddProduct /> },
-      { path: "detail", element: <Detail /> },
-    ],
+  },
+  {
+    path: "prod_about/products/add_product",
+    element: <AddProduct />,
+  },
+  {
+    path: "prod_about/products/detail/:id",
+    element: <Detail />,
+  },
+  {
+    path: "prod_about/products/update_product/:id",
+    element: <AddProduct />,
   },
 
   {

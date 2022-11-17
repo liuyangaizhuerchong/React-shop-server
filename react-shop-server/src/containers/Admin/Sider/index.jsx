@@ -24,8 +24,9 @@ const getMenuItem = (target) => {
 
 export default function AdminSider() {
   const pathKey = useLocation();
-  const defaultSelectItem = pathKey.pathname.split("/").reverse()[0];
-  const defaultOpenItem = pathKey.pathname.split("/").splice(2);
+  const { pathname } = pathKey;
+  const defaultSelectItem = pathname.split('/').includes('products')?'products': pathname.split("/").reverse()[0];
+  const defaultOpenItem = pathname.split("/").splice(2);
   return (
     <Sider className="sider">
       <div className="sider_logo">
