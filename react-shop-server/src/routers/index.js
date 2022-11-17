@@ -1,10 +1,12 @@
-import Product from "../containers/Product";
+import Products from "../containers/Products";
 import Category from "../containers/Category";
 import Home from "../containers/Home";
 import Line from "../containers/Line";
 import Pie from "../containers/Pie";
 import Role from "../containers/Role";
 import User from "../containers/user";
+import AddProduct from "../containers/Products/AddProduct";
+import Detail from "../containers/Products/Detail";
 
 export const all_routes = [
   {
@@ -17,8 +19,18 @@ export const all_routes = [
     element: <Category />,
   },
   {
+    path: "prod_about/product/add_product",
+    element: <AddProduct />,
+  },
+
+  {
     path: "prod_about/product",
-    element: <Product />,
+    element: <Products />,
+    children: [
+      // { path: "add_product", element: <AddProduct /> },
+      { path: "update_product", element: <AddProduct /> },
+      { path: "detail", element: <Detail /> },
+    ],
   },
 
   {
