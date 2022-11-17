@@ -10,6 +10,7 @@ import {
   Space,
   Tooltip,
   message,
+  Spin,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { productsListApi } from "../../api/products";
@@ -24,6 +25,7 @@ export default function Products() {
   const [selectName, setSelectName] = useState("name");
   const [input_Value, setInputValue] = useState("");
   const [isSearch, setIsSearch] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const productsList = async (number = 1) => {
@@ -39,6 +41,7 @@ export default function Products() {
       dispatch(productsAction(res));
     }
     if (res.code === 1) {
+      setLoading(false);
       setData(res.data);
       setTotal(res.total);
     } else message.error("商品列表获取失败！");
@@ -138,7 +141,7 @@ export default function Products() {
     },
   ];
   return (
-    <>
+    <Spin tip="Loading..." spinning={loading}>
       <Card
         className="products_card"
         title={
@@ -190,6 +193,6 @@ export default function Products() {
           }}
         />
       </Card>
-    </>
+    </Spin>
   );
 }

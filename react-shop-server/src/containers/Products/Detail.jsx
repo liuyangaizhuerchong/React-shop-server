@@ -33,7 +33,7 @@ export default function Detail() {
         className="detail_card"
         title={
           <Button
-            className="detail_button"
+            className="prod_button"
             type="link"
             icon={<LeftOutlined />}
             onClick={() => navigate(-1)}

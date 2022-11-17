@@ -11,6 +11,8 @@ import {
   Spin,
 } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { saveCategory } from "../../redux/actions/categoryAction";
 import {
   categoryListApi,
   addCategoryApi,
@@ -21,21 +23,23 @@ import { dalImg } from "../../config/tools";
 import "./index.less";
 const { confirm } = Modal;
 export default function Category() {
-  const [data, setData] = useState([]);
+  const [category, setCategory] = useState([]);
   const [open, setOpen] = useState(false);
   const [typeOpen, setTypeOpen] = useState("");
   const [id, setId] = useState(0);
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
   useEffect(() => {
     categoryList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const categoryList = async () => {
     const result = await categoryListApi();
-    const { data, code } = result;
-    if (code === 1) {
-      setData(data);
+    if (result.code === 1) {
+      setCategory(result.data);
       setIsLoading(false);
+      dispatch(saveCategory(result.data));
     } else {
       message.error("获取数据失败", 1);
     }
@@ -149,7 +153,7 @@ export default function Category() {
         >
           <Table
             className="category_table"
-            dataSource={data}
+            dataSource={category}
             columns={columns}
             bordered={true}
             rowKey="id"

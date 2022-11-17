@@ -1,11 +1,18 @@
-.ant-table-wrapper .ant-spin-nested-loading .ant-spin-container {
-  height: 100%;
-}
 .ant-card-body {
   padding: 0;
+  .ant-table-pagination.ant-pagination {
+    margin: 16px 24px;
+  }
+  .product_img {
+    max-width: 80px;
+    max-height: 80px;
+  }
 }
-.ant-pagination-options-quick-jumper {
-  margin-right: 24px;
+.prod_button {
+  font-size: 16px;
+  span {
+    margin-right: 5px;
+  }
 }
 .search_name {
   width: 15%;
@@ -14,19 +21,20 @@
   width: 20%;
   margin: 0 10px;
 }
-.product_img {
-  max-width: 80px;
-  max-height: 80px;
+.prod_form {
+  height: 100%;
+  .ant-form-item-label > label {
+    font-size: 20px;
+    font-weight: 900;
+  }
+  .submit-form {
+    text-align: center;
+  }
 }
 .detail_card {
   height: 100%;
   overflow-y: auto;
-  .detail_button {
-    font-size: 16px;
-    span {
-      margin-right: 5px;
-    }
-  }
+
   .detail_list {
     height: 100%;
     .ant-list-item {
