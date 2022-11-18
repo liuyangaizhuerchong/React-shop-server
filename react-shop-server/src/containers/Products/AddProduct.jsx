@@ -14,7 +14,6 @@ export default function AddProduct() {
   const data = useSelector((state) => state.saveCategory);
   const [category, setCategory] = useState([]);
   const loadCategory = async () => {
-    console.log(data);
     if (data.length === 0) {
       const res = await categoryListApi();
       res.code === 1 ? setCategory(res.data) : setCategory([]);
@@ -36,8 +35,7 @@ export default function AddProduct() {
           icon={<LeftOutlined />}
           onClick={() => navigate(-1)}
         >
-          <span>返回</span>
-          <span>新增商品</span>
+          新增商品
         </Button>
       }
     >

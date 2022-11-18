@@ -24,7 +24,6 @@ export default function Detail() {
       res = await detailProductApi(id);
       setDetail(res);
     }
-    console.log(res);
   };
 
   return (
@@ -38,8 +37,7 @@ export default function Detail() {
             icon={<LeftOutlined />}
             onClick={() => navigate(-1)}
           >
-            <span>返回</span>
-            <span>商品详情</span>
+            商品详情
           </Button>
         }
       >
@@ -50,7 +48,7 @@ export default function Detail() {
           </Item>
           <Item>
             <h1>商品售价：</h1>
-            <span>{detail.price}元</span>
+            <span>{detail.price + "元"}</span>
           </Item>
           <Item>
             <h1>商品分类：</h1>

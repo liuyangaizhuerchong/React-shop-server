@@ -143,6 +143,7 @@ export default function Products() {
   return (
     <Spin tip="Loading..." spinning={loading}>
       <Card
+        bordered={false}
         className="products_card"
         title={
           <>

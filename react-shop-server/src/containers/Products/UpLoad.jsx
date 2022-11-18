@@ -1,6 +1,8 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload } from "antd";
 import React, { useState } from "react";
+
+import { upLoadImg } from "../../config/tools";
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -12,19 +14,7 @@ export default function App() {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([
-    {
-      uid: "-1",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-    {
-      uid: "-5",
-      name: "image.png",
-      status: "error",
-    },
-  ]);
+  const [fileList, setFileList] = useState([]);
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -36,7 +26,12 @@ export default function App() {
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const handleChange = ({ file, fileList: newFileList }) => {
+    // 状态有：uploading done error removed，被 beforeUpload 拦截的文件没有 status 属性
+    console.log(file);
+    // console.log(fileList);
+    setFileList(newFileList);
+  };
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -45,20 +40,20 @@ export default function App() {
           marginTop: 8,
         }}
       >
-        Upload
+        上传图片
       </div>
     </div>
   );
   return (
     <>
       <Upload
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        action={upLoadImg}
         listType="picture-card"
         fileList={fileList}
         onPreview={handlePreview}
         onChange={handleChange}
       >
-        {fileList.length >= 8 ? null : uploadButton}
+        {fileList.length >= 4 ? null : uploadButton}
       </Upload>
       <Modal
         open={previewOpen}

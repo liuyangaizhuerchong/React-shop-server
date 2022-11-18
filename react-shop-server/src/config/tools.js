@@ -2,6 +2,8 @@
 
 export const serversUrl = "http://sails.penkuoer.com";
 
+export const upLoadImg = serversUrl + "/api/v1/common/upload_file";
+
 export const setToken = (name, data) => sessionStorage.setItem(name, data);
 
 export const getToken = (name) => sessionStorage.getItem(name);
