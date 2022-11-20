@@ -20,13 +20,17 @@
   margin: 0 10px;
 }
 .prod_form {
+  padding: 24px 0 0 24px;
   height: 100%;
   .ant-form-item-label > label {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 900;
   }
   .submit-form {
     text-align: center;
+    button {
+      margin: 0 10px;
+    }
   }
 }
 .detail_card {
@@ -39,7 +43,7 @@
       align-items: center;
       justify-content: flex-start;
       h1 {
-        font-size: 20px;
+        font-size: 16px;
         font-weight: 900;
         margin-bottom: 0;
         margin-left: 40px;
@@ -51,5 +55,16 @@
         max-width: 200px;
       }
     }
+  }
+}
+.add_product {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.editor-wrapper {
+  border: 1px solid #cecece;
+  .bf-content {
+    max-height: 300px;
   }
 }

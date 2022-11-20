@@ -28,9 +28,12 @@ export default function App() {
   };
   const handleChange = ({ file, fileList: newFileList }) => {
     // 状态有：uploading done error removed，被 beforeUpload 拦截的文件没有 status 属性
-    console.log(file);
-    // console.log(fileList);
     setFileList(newFileList);
+    if (file.status === "done") {
+      let { data } = file.response;
+      fileList[fileList.length - 1] = file;
+      fileList[fileList.length - 1].url = data;
+    }
   };
   const uploadButton = (
     <div>
@@ -49,6 +52,7 @@ export default function App() {
       <Upload
         action={upLoadImg}
         listType="picture-card"
+        name="file"
         fileList={fileList}
         onPreview={handlePreview}
         onChange={handleChange}

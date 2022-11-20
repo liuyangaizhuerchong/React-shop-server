@@ -51,6 +51,14 @@ export default function Detail() {
             <span>{detail.price + "元"}</span>
           </Item>
           <Item>
+            <h1>商品库存：</h1>
+            <span>{detail.amount + "件"}</span>
+          </Item>
+          <Item>
+            <h1>是否在售：</h1>
+            <span>{detail.onSale === 0 ? "在售" : "已下架"}</span>
+          </Item>
+          <Item>
             <h1>商品分类：</h1>
             <span>{detail.category?.name}</span>
           </Item>

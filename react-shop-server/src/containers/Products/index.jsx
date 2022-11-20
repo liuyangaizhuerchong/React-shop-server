@@ -11,14 +11,19 @@ import {
   Tooltip,
   message,
   Spin,
+  Modal,
 } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
-import { productsListApi } from "../../api/products";
+import { SearchOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import {
+  delProductApi,
+  productsListApi,
+  putProductApi,
+} from "../../api/products";
 import { dalImg } from "../../config/tools";
 import { PER_SIZE } from "../../config/tools";
 import { productsAction } from "../../redux/actions/productsAction";
 import "./index.less";
-
+const { confirm } = Modal;
 export default function Products() {
   const [data, setData] = useState([]);
   const [total, setTotal] = useState(1);
@@ -53,6 +58,26 @@ export default function Products() {
   const searchProducts = async () => {
     setIsSearch(true);
     productsList();
+  };
+  const isOnSale = async (id, onSale) => {
+    await putProductApi(id, { onSale: !onSale });
+    message.success(onSale === 0 ? "下架成功" : "上架成功");
+    productsList();
+  };
+  const delProduct = (id) => {
+    confirm({
+      title: "警告！",
+      icon: <ExclamationCircleOutlined />,
+      content: "是否确定删除该项？",
+      okText: "确定",
+      cancelText: "取消",
+      centered: true,
+      onOk: async () => {
+        await delProductApi(id);
+        productsList();
+        message.success("删除成功");
+      },
+    });
   };
   const columns = [
     {
@@ -104,15 +129,19 @@ export default function Products() {
     },
     {
       title: "状态",
-      key: "status",
       width: "5%",
       align: "center",
       render: (text, record, index) => {
         return (
           <>
-            <Button type="primary">上架</Button>
+            <Button
+              type="primary"
+              onClick={() => isOnSale(text.id, text.onSale)}
+            >
+              {text.onSale === 0 ? "下架" : "上架"}
+            </Button>
             <br />
-            <span>已下架</span>
+            <span>{text.onSale === 0 ? "在售" : "已下架"}</span>
           </>
         );
       },
@@ -130,11 +159,18 @@ export default function Products() {
             </Button>
             <Button
               type="link"
-              onClick={() => navigate(`update_product/${text.id}`)}
+              onClick={() =>
+                navigate(`update_product/${text.id}`, {
+                  replace: false,
+                  state: text,
+                })
+              }
             >
               修改
             </Button>
-            <Button type="link">删除</Button>
+            <Button type="link" onClick={() => delProduct(text.id)}>
+              删除
+            </Button>
           </Space>
         );
       },
@@ -174,7 +210,7 @@ export default function Products() {
           </>
         }
         extra={
-          <Button type="primary" onClick={() => navigate("add_product")}>
+          <Button type="primary" onClick={() => navigate(`add_product/`)}>
             新增
           </Button>
         }
