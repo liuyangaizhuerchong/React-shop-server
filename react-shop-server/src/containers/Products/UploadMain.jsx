@@ -25,7 +25,7 @@ export default function UploadMain({ imageUrl, setImageUrl }) {
           marginTop: 8,
         }}
       >
-        Upload
+        上传文件
       </div>
     </div>
   );

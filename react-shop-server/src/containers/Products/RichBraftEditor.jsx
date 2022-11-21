@@ -10,19 +10,10 @@ export default function RichBraftEditor({ editorState, setEditorState }) {
     setEditorState(editorState);
   };
   return (
-    <>
-      {editorState ? (
-        <div
-          className="output-content"
-          dangerouslySetInnerHTML={{ __html: editorState }}
-        ></div>
-      ) : (
-        <BraftEditor
-          className="editor-wrapper"
-          value={editorState}
-          onChange={handleEditorChange}
-        />
-      )}
-    </>
+    <BraftEditor
+      className="editor-wrapper"
+      value={editorState}
+      onChange={handleEditorChange}
+    />
   );
 }

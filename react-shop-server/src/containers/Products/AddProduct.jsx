@@ -3,11 +3,15 @@ import { Button, Card, Form, Input, message, Select, Col, Row } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import BraftEditor from "braft-editor";
 import { categoryListApi } from "../../api/products";
 import UploadMain from "./UploadMain";
 import RichBraftEditor from "./RichBraftEditor";
-import { addProductApi, detailProductApi } from "../../api/products";
-import { dalImg } from "../../config/tools";
+import {
+  addProductApi,
+  detailProductApi,
+  putProductApi,
+} from "../../api/products";
 import "./index.less";
 
 const { Item } = Form;
@@ -19,16 +23,22 @@ export default function AddProduct() {
   const [categoryList, setCategory] = useState([]);
   const [form] = Form.useForm();
   const [imageUrl, setImageUrl] = useState("");
-  const [detailContent, setDetailContent] = useState("");
   const [editorState, setEditorState] = useState(null);
   const { state } = useLocation();
   const onFinish = async (values) => {
-    await addProductApi({
-      ...values,
-      coverImage: imageUrl,
-      content: editorState.toHTML(),
-    });
-    message.success("新增商品成功");
+    if (state) {
+      await putProductApi(state.id, {
+        ...values,
+        coverImage: imageUrl,
+        content: editorState.toHTML(),
+      });
+    } else
+      await addProductApi({
+        ...values,
+        coverImage: imageUrl,
+        content: editorState.toHTML(),
+      });
+    message.success(state ? "修改商品成功" : "新增商品成功");
     navigate("/admin/prod_about/products", { replace: true });
   };
   const loadCategory = async () => {
@@ -40,13 +50,16 @@ export default function AddProduct() {
     }
   };
   useEffect(() => {
-    if (state) detailProduct();
+    if (state) {
+      detailProduct();
+      setImageUrl(state.coverImage);
+    }
     loadCategory();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const detailProduct = async () => {
     const res = await detailProductApi(state.id);
-    setDetailContent(res.content);
+    setEditorState(BraftEditor.createEditorState(res.content));
   };
   return (
     <Card
@@ -69,7 +82,7 @@ export default function AddProduct() {
         className="prod_form"
         initialValues={{
           ...state,
-          category: state ? state.category?.name : "",
+          category: state ? state.category?.id : "",
         }}
       >
         <Row gutter={16}>
@@ -131,10 +144,7 @@ export default function AddProduct() {
         <Row gutter={24} style={{ marginLeft: "0" }}>
           <Col span={6}>
             <Item label="商品图片：" name="coverImage">
-              <UploadMain
-                imageUrl={state ? dalImg(state.coverImage) : imageUrl}
-                setImageUrl={setImageUrl}
-              />
+              <UploadMain imageUrl={imageUrl} setImageUrl={setImageUrl} />
             </Item>
           </Col>
           <Col span={12}>
@@ -152,7 +162,7 @@ export default function AddProduct() {
           <Col span={18}>
             <Item label="商品描述：" name="content">
               <RichBraftEditor
-                editorState={state ? detailContent : editorState}
+                editorState={editorState}
                 setEditorState={setEditorState}
               />
             </Item>

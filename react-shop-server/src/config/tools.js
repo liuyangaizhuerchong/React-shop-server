@@ -1,6 +1,6 @@
-// export const serversUrl = "http://localhost:1337";
+export const serversUrl = "http://localhost:1337";
 
-export const serversUrl = "http://sails.penkuoer.com";
+// export const serversUrl = "http://sails.penkuoer.com";
 
 export const upLoadImg = serversUrl + "/api/v1/common/upload_file";
 

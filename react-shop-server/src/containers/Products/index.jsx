@@ -153,18 +153,20 @@ export default function Products() {
       render: (text, record, index) => {
         return (
           <Space>
-            {/*  "detail", { state: { id: text.id } } */}
             <Button type="link" onClick={() => navigate(`detail/${text.id}`)}>
               详情
             </Button>
             <Button
               type="link"
-              onClick={() =>
-                navigate(`update_product/${text.id}`, {
-                  replace: false,
-                  state: text,
-                })
-              }
+              onClick={() => {
+                if (text.onSale === 1) message.warn("商品下架中，不能修改");
+                else {
+                  navigate(`update_product/${text.id}`, {
+                    replace: false,
+                    state: text,
+                  });
+                }
+              }}
             >
               修改
             </Button>
